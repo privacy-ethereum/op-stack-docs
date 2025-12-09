@@ -34,6 +34,7 @@ curl https://mise.jdx.dev/install.sh | bash
 
 # Install all required tools with correct versions
 cd docs/create-l2-rollup-example
+mist trust
 mise install
 ```
 
@@ -222,6 +223,39 @@ By default, this devnet disables P2P networking entirely to avoid validation war
 sed -i '' '/--p2p.disable/d' docker-compose.yml
 # Then add back P2P flags manually in docker-compose.yml
 docker-compose restart op-node
+## Code modification
+
+If you want to add new precompile or new transaction type, you have to update `optimism` code (e.g. `op-node`).
+
+1. **Build project**: 
+
+```bash
+cd optimism
+mise trust
+mise install
+make build
+```
+
+2. **Build docker images**:
+
+```bash
+make golang-docker
+```
+
+Then you can use tag versions for the images (`op-node`, `batcher`, `proposer`, `challenger`, `dispute-mon`) for your local deployment (see [docker-compose.yml](./docker-compose.yml))
+
+3. **Rebuild op-node docker**:
+
+```bash
+make op-node
+make cross-op-node
+```
+
+4. **Apply op-node changes**:
+
+```bash
+cd ..
+docker compose up op-node -d --force-recreate
 ```
 
 ## Troubleshooting
