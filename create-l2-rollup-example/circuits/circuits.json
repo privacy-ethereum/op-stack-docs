@@ -1,0 +1,8 @@
+{
+  "UnspendableAddress": {
+    "file": "UnspendableAddress",
+    "template": "UnspendableAddress",
+    "params": ["123"],
+    "pubs": ["hash"]
+  }
+}
