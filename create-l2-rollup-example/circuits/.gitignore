@@ -1,1 +1,4 @@
 circom/test/
+circom/main/
+build/
+ptau/

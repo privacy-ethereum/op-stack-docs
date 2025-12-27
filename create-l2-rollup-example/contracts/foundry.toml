@@ -1,0 +1,16 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["dependencies"]
+gas_reports = ["*"]
+
+[dependencies]
+forge-std = "1.12.0"
+"@openzeppelin-contracts" = "5.5.0"
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+[rpc_endpoints]
+sepolia = "${SEPOLIA_RPC_URL}"
+ 
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}" }

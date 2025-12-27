@@ -7,14 +7,22 @@ include "./Slice20Bytes.circom";
 
 // This circuit generates an unspendable address from secret, random, and nonce inputs
 template UnspendableAddress(DOMAIN_TAG) {
+    // ------------------------------------------------------
+    // Private Inputs
+    // ------------------------------------------------------
     // Input secret signal
     signal input secret;
     // Input random signal
     signal input random;
     // Input nonce signal
     signal input nonce;
+
+    // ------------------------------------------------------
+    // Public Inputs
+    // ------------------------------------------------------
     // Input preimage hash signal of secret, random, and nonce
     signal input preimageHash;
+
     // Output unspendable address signal
     signal output address;
     

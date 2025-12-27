@@ -3,6 +3,18 @@
     "file": "UnspendableAddress",
     "template": "UnspendableAddress",
     "params": ["123"],
-    "pubs": ["hash"]
+    "pubs": ["preimageHash"]
+  },
+  "PedersenCommitment": {
+    "file": "PedersenCommitment",
+    "template": "PedersenCommitment",
+    "params": [],
+    "pubs": ["commitment"]
+  },
+  "TransactionRangeCheck": {
+    "file": "TransactionRangeCheck",
+    "template": "TransactionRangeCheck",
+    "params": [],
+    "pubs": ["amountCommitment", "balanceCommitment"]
   }
 }
