@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.28;
+pragma solidity ^0.8.30;
 
 /**
  * @title L1Burn
@@ -9,7 +9,8 @@ contract L1Burn {
     /**
      * @notice The system caller responsible for L1 attributes transactions
      */
-    address internal constant DEPOSITOR_ACCOUNT = 0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001;
+    address public constant DEPOSITOR_ACCOUNT =
+        0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001;
 
     /**
      * @notice Total amount of ETH burned on L1
@@ -19,12 +20,17 @@ contract L1Burn {
     /**
      * @notice Mapping of block numbers to total burn
      */
-    mapping (uint64 => uint256) public reports;
+    mapping(uint64 => uint256) public reports;
 
     /**
      * @notice Thrown when a burn report is received from the non-depositor account
      */
     error Unauthorized();
+
+    /**
+     * @notice Thrown when a burn report is received for a block that has already been reported
+     */
+    error AlreadyReported();
 
     /**
      * @notice Allows the system address to submit a report
@@ -35,6 +41,10 @@ contract L1Burn {
     function report(uint64 _blockNumber, uint64 _burnAmount) external {
         if (msg.sender != DEPOSITOR_ACCOUNT) {
             revert Unauthorized();
+        }
+
+        if (reports[_blockNumber] != 0) {
+            revert AlreadyReported();
         }
 
         total += _burnAmount;

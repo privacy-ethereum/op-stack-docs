@@ -3,6 +3,45 @@
     "file": "UnspendableAddress",
     "template": "UnspendableAddress",
     "params": ["123"],
-    "pubs": ["hash"]
+    "pubs": ["preimageHash"]
+  },
+  "PedersenCommitment": {
+    "file": "PedersenCommitment",
+    "template": "PedersenCommitment",
+    "params": [],
+    "pubs": ["commitment"]
+  },
+  "TransactionRangeCheck": {
+    "file": "TransactionRangeCheck",
+    "template": "TransactionRangeCheck",
+    "params": [],
+    "pubs": ["amountCommitment", "balanceCommitment"]
+  },
+  "BalanceCheck": {
+    "file": "BalanceCheck",
+    "template": "BalanceCheck",
+    "params": ["123"],
+    "pubs": ["preimageHash", "balanceCommitment", "nullifier", "commitment"]
+  },
+  "Withdrawal": {
+    "file": "Withdrawal",
+    "template": "Withdrawal",
+    "params": ["32"],
+    "pubs": ["root", "nullifier", "commitment", "newCommitment", "depth"]
+  },
+  "ProofOfBurn": {
+    "file": "ProofOfBurn",
+    "template": "ProofOfBurn",
+    "params": ["123", "32"],
+    "pubs": [
+      "preimageHash",
+      "amountCommitment",
+      "balanceCommitment",
+      "root",
+      "nullifier",
+      "commitment",
+      "newCommitment",
+      "depth"
+    ]
   }
 }

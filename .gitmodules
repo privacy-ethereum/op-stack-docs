@@ -1,0 +1,6 @@
+[submodule "create-l2-rollup-example/contracts/dependencies/forge-std"]
+	path = create-l2-rollup-example/contracts/dependencies/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "create-l2-rollup-example/contracts/dependencies/openzeppelin-contracts"]
+	path = create-l2-rollup-example/contracts/dependencies/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
