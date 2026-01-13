@@ -19,8 +19,8 @@ contract CurveBabyJubJubTest is Test {
 
     function testFuzz_packUnpackPoint(uint256 scalar) public view {
         (uint256 initialX, uint256 initialY) = CurveBabyJubJub.pointMul(
-            CurveBabyJubJub.Base8X,
-            CurveBabyJubJub.Base8Y,
+            CurveBabyJubJub.BASE8_X,
+            CurveBabyJubJub.BASE8_Y,
             scalar
         );
 
@@ -37,8 +37,8 @@ contract CurveBabyJubJubTest is Test {
 
     function testFuzz_pointAddPointDouble(uint256 scalar) public view {
         (uint256 initialX, uint256 initialY) = CurveBabyJubJub.pointMul(
-            CurveBabyJubJub.Base8X,
-            CurveBabyJubJub.Base8Y,
+            CurveBabyJubJub.BASE8_X,
+            CurveBabyJubJub.BASE8_Y,
             scalar
         );
 
@@ -66,14 +66,14 @@ contract CurveBabyJubJubTest is Test {
         uint256 scalar2
     ) public view {
         (uint256 initial1X, uint256 initial1Y) = CurveBabyJubJub.pointMul(
-            CurveBabyJubJub.Base8X,
-            CurveBabyJubJub.Base8Y,
+            CurveBabyJubJub.BASE8_X,
+            CurveBabyJubJub.BASE8_Y,
             scalar1
         );
 
         (uint256 initial2X, uint256 initial2Y) = CurveBabyJubJub.pointMul(
-            CurveBabyJubJub.Base8X,
-            CurveBabyJubJub.Base8Y,
+            CurveBabyJubJub.BASE8_X,
+            CurveBabyJubJub.BASE8_Y,
             scalar2
         );
 

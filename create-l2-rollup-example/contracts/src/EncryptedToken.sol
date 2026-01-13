@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-import {ERC20} from "@openzeppelin-contracts/token/ERC20/ERC20.sol";
-import {IERC20} from "@openzeppelin-contracts/token/ERC20/IERC20.sol";
 import {CurveBabyJubJub} from "./crypto/CurveBabyJubJub.sol";
 import {IVerifier} from "./interfaces/IVerifier.sol";
 
@@ -159,7 +157,7 @@ contract EncryptedToken {
      * @param y The new commitment x-coordinate to set
      */
     function _updateBalance(address account, uint256 x, uint256 y) private {
-        Commitment memory commitment = Commitment(x, y);
+        Commitment memory commitment = Commitment({x: x, y: y});
         _balances[account] = commitment;
     }
 }

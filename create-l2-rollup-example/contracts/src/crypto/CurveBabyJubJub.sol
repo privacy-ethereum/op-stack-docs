@@ -18,9 +18,9 @@ library CurveBabyJubJub {
     uint256 public constant Q =
         0x30644E72E131A029B85045B68181585D2833E84879B9709143E1F593F0000001;
     // Base point
-    uint256 internal constant Base8X =
+    uint256 internal constant BASE8_X =
         5299619240641551281634865583518297030282874472190772894086521144482721001553;
-    uint256 internal constant Base8Y =
+    uint256 internal constant BASE8_Y =
         16950150798460657717958625567821834550301663161624707787222815936182638968203;
     // Subgroup order
     uint256 internal constant SUBGROUP_ORDER =

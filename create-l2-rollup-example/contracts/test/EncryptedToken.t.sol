@@ -4,7 +4,6 @@ pragma solidity ^0.8.30;
 import {Test} from "forge-std/src/Test.sol";
 import {CurveBabyJubJub} from "../src/crypto/CurveBabyJubJub.sol";
 import {Groth16Verifier} from "../src/crypto/Groth16Verifier.sol";
-import {IVerifier} from "../src/interfaces/IVerifier.sol";
 import {EncryptedToken} from "../src/EncryptedToken.sol";
 import {PedersenCommitment} from "../src/PedersenCommitment.sol";
 
@@ -13,8 +12,8 @@ contract EncryptedTokenTest is Test {
     PedersenCommitment public pedersenCommitment;
     Groth16Verifier public verifier;
 
-    uint256 public constant mintedBalance = 10 ** 18;
-    uint256 public constant mintedRandom = 8000;
+    uint256 public constant MINTED_BALANCE = 10 ** 18;
+    uint256 public constant MINTED_RANDOM = 8000;
     uint256[8] public mockProof = [
         14808338865819067265902649274357823880518674989205716253974634754141691280315,
         8522144239604611700153609365961599434046829697672866132043985044825857612382,
@@ -37,8 +36,8 @@ contract EncryptedTokenTest is Test {
         pedersenCommitment = new PedersenCommitment();
 
         (uint256 x, uint256 y) = pedersenCommitment.commitment(
-            mintedBalance,
-            mintedRandom
+            MINTED_BALANCE,
+            MINTED_RANDOM
         );
         encryptedToken.mint(sender, EncryptedToken.Commitment(x, y));
     }
@@ -49,8 +48,8 @@ contract EncryptedTokenTest is Test {
         );
 
         (uint256 initialX, uint256 initialY) = pedersenCommitment.commitment(
-            mintedBalance,
-            mintedRandom
+            MINTED_BALANCE,
+            MINTED_RANDOM
         );
 
         assertEq(initialX, commitment.x);
@@ -91,7 +90,7 @@ contract EncryptedTokenTest is Test {
 
     function test_TransferFailWithInsufficientBalance() public {
         (uint256 x, uint256 y) = pedersenCommitment.commitment(
-            mintedBalance + 1,
+            MINTED_BALANCE + 1,
             9000
         );
 
@@ -128,7 +127,7 @@ contract EncryptedTokenTest is Test {
         uint256 receiverRandom = 9000;
 
         (uint256 x, uint256 y) = pedersenCommitment.commitment(
-            mintedBalance / 5,
+            MINTED_BALANCE / 5,
             receiverRandom
         );
 
@@ -144,18 +143,18 @@ contract EncryptedTokenTest is Test {
             .balanceOf(receiver);
 
         uint256 senderRandom = addmod(
-            mintedRandom,
+            MINTED_RANDOM,
             CurveBabyJubJub.SUBGROUP_ORDER - receiverRandom,
             CurveBabyJubJub.SUBGROUP_ORDER
         );
 
         (uint256 senderX, uint256 senderY) = pedersenCommitment.commitment(
-            mintedBalance - mintedBalance / 5,
+            MINTED_BALANCE - MINTED_BALANCE / 5,
             senderRandom
         );
 
         (uint256 receiverX, uint256 receiverY) = pedersenCommitment.commitment(
-            mintedBalance / 5,
+            MINTED_BALANCE / 5,
             receiverRandom
         );
 

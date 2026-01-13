@@ -3,9 +3,16 @@ import { WitnessTester } from "circomkit";
 import { isAddress } from "ethers";
 import fc from "fast-check";
 import { poseidon2 } from "poseidon-lite/poseidon2";
-import { poseidon3 } from "poseidon-lite/poseidon3";
 
-import { generateUnspendableAddress, hex } from "../ts/address";
+import path from "path";
+
+import {
+  generateUnspendableAddress,
+  hex,
+  proveUnspendableAdddressOwnership,
+} from "../ts/address";
+import { extractVerifyingKey } from "../ts/keys";
+import { verifyProof } from "../ts/proof";
 import { BN254_FR_MODULUS, circomkit, getSignal } from "./common";
 
 describe("UnspendableAddress", () => {
@@ -28,6 +35,36 @@ describe("UnspendableAddress", () => {
       template: "UnspendableAddress",
       params: [DOMAIN_TAG],
     });
+  });
+
+  it("should prove unspendable address ownership properly", async () => {
+    const zkeyPath = path.resolve(
+      __dirname,
+      "../build/UnspendableAddress/groth16_pkey.zkey"
+    );
+
+    const wasmPath = path.resolve(
+      __dirname,
+      "../build/UnspendableAddress/UnspendableAddress_js/UnspendableAddress.wasm"
+    );
+
+    const data = await proveUnspendableAdddressOwnership({
+      secret: common.secret,
+      random: common.random,
+      nonce: common.nonce,
+      tag: DOMAIN_TAG,
+      zkeyPath,
+      wasmPath,
+    });
+
+    const verifyingKey = await extractVerifyingKey(zkeyPath);
+    const isValid = await verifyProof(
+      data.publicSignals,
+      data.proof,
+      verifyingKey
+    );
+
+    expect(isValid).to.eq(true);
   });
 
   it("should generate an unspendable address properly", async () => {

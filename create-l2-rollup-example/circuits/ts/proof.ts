@@ -27,7 +27,7 @@ export const verifyProof = async (
   proof: Groth16Proof,
   verifyingKey: IVerifyingKeyObjectParams
 ): Promise<boolean> => {
-  return groth16.verify(verifyingKey, publicInputs, proof);
+  return await groth16.verify(verifyingKey, publicInputs, proof);
 };
 
 /**

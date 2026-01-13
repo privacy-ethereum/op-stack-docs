@@ -171,3 +171,146 @@ export interface IPrepareTransactionDataReturn {
    */
   verifyingKey: IVerifyingKeyObjectParams;
 }
+
+/**
+ * Arguments for proving unspendable address ownership
+ */
+export interface IProveUnspendableAdddressOwnershipArgs {
+  /**
+   * Secret
+   */
+  secret: bigint;
+
+  /**
+   * Random
+   */
+  random: bigint;
+
+  /**
+   * Nonce
+   */
+  nonce: bigint;
+
+  /**
+   * Domain separation tag
+   */
+  tag: bigint;
+
+  /**
+   * Zkey path
+   */
+  zkeyPath: string;
+
+  /**
+   * Wasm path
+   */
+  wasmPath: string;
+}
+
+/**
+ * Arguments for proving unspendable address with balance ownership
+ */
+export interface IProvideUnspendableAddressWithBalanceOwnershipArgs
+  extends IProveUnspendableAdddressOwnershipArgs {
+  /**
+   * Sender's balance
+   */
+  balance: bigint;
+
+  /**
+   * Random blinding factor for sender's balance
+   */
+  balanceRandom: bigint;
+
+  /**
+   * Initial withdrawal key
+   */
+  withdrawalKey: bigint;
+
+  /**
+   * Initial withdrawal salt
+   */
+  withdrawalSalt: bigint;
+
+  /**
+   * Pedersen balance commitment
+   */
+  balanceCommitment: [bigint, bigint];
+}
+
+export interface IMintTokensArgs extends IGenerateUnspendableAddressArgs {
+  /**
+   * Transaction amount to send
+   */
+  amount: bigint;
+
+  /**
+   * Random blinding factor for transaction
+   */
+  amountRandom: bigint;
+
+  /**
+   * Sender's balance
+   */
+  balance: bigint;
+
+  /**
+   * Random blinding factor for sender's balance
+   */
+  balanceRandom: bigint;
+
+  /**
+   * Initial withdrawal key
+   */
+  withdrawalKey: bigint;
+
+  /**
+   * Initial withdrawal salt
+   */
+  withdrawalSalt: bigint;
+
+  /**
+   * New withdrawal key
+   */
+  newWithdrawalKey: bigint;
+
+  /**
+   * New withdrawal salt
+   */
+  newWithdrawalSalt: bigint;
+
+  /**
+   * Actual withdrawal state tree depth
+   */
+  actualDepth: number;
+
+  /**
+   * Withdrawal tree depth
+   */
+  depth: number;
+
+  /**
+   * State leaf index
+   */
+  index: number;
+
+  /**
+   * Withdrawal tree sibling nodes
+   */
+  siblings: bigint[];
+
+  /**
+   * Withdrawal tree root
+   */
+  root: bigint
+
+  /**
+   * The path to the zkey
+   */
+  zkeyPath: string;
+
+  /**
+   * The path to the wasm witness
+   */
+  wasmPath: string;
+}

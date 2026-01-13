@@ -7,12 +7,12 @@ import {Groth16Verifier} from "../src/crypto/Groth16Verifier.sol";
 contract Groth16VerifierTest is Test {
     Groth16Verifier public verifier;
 
-    uint256[2] public pi_a = [
+    uint256[2] public piA = [
         7969587118096664744473570730441671844115018246103198045907066908969029912907,
         18295975849148139324183940217016234115036491580019361411955484906686516623492
     ];
 
-    uint256[2][2] public pi_b = [
+    uint256[2][2] public piB = [
         [
             4370032294078161611554106841953050649196955911681253131335952717658924876834,
             6853067571876741771154032826791721374502397079726708285445372206295264928219
@@ -23,7 +23,7 @@ contract Groth16VerifierTest is Test {
         ]
     ];
 
-    uint256[2] public pi_c = [
+    uint256[2] public piC = [
         17071268393699904862027808199550660902935295536063967017638376917899488776412,
         8967303173043760513256656594549954117909163889924062097213074654113150392458
     ];
@@ -34,9 +34,9 @@ contract Groth16VerifierTest is Test {
 
     function test_verify() public view {
         bool isValid = verifier.verify(
-            pi_a,
-            pi_b,
-            pi_c,
+            piA,
+            piB,
+            piC,
             [
                 10902935323239770132304877887813089174007609282868323661190534977195290683905,
                 21721813120947237293017116651043754822878411738705747624748709348843024231796,
@@ -48,12 +48,12 @@ contract Groth16VerifierTest is Test {
         assertTrue(isValid);
     }
 
-    function test_checkFieldEdgeCase() public {
+    function test_checkFieldEdgeCase() public view {
         uint256 r = 21888242871839275222246405745257275088548364400416034343698204186575808495617;
 
         uint256[4] memory pubSignals = [r, 1, 1, 1];
 
-        bool isValid = verifier.verify(pi_a, pi_b, pi_c, pubSignals);
+        bool isValid = verifier.verify(piA, piB, piC, pubSignals);
 
         assertFalse(isValid);
     }

@@ -15,13 +15,13 @@ contract PedersenCommitment {
      * subgroup as the base generator G, and its discrete logarithm
      * relative to G must be unknown.
      */
-    uint256 public constant Hx =
+    uint256 public constant HX =
         8161729262802821074953933772769868423242630511238094437756788308176542630231;
     /**
      * @notice Y-coordinate of the generator H.
-     * @dev See `Hx` for security requirements.
+     * @dev See `HX` for security requirements.
      */
-    uint256 public constant Hy =
+    uint256 public constant HY =
         17477144202559280327772048374561482684555254494412313979603280050466695949333;
 
     /**
@@ -59,11 +59,11 @@ contract PedersenCommitment {
         }
 
         (uint256 mGx, uint256 mGy) = CurveBabyJubJub.pointMul(
-            CurveBabyJubJub.Base8X,
-            CurveBabyJubJub.Base8Y,
+            CurveBabyJubJub.BASE8_X,
+            CurveBabyJubJub.BASE8_Y,
             message
         );
-        (uint256 rHx, uint256 rHy) = CurveBabyJubJub.pointMul(Hx, Hy, random);
+        (uint256 rHx, uint256 rHy) = CurveBabyJubJub.pointMul(HX, HY, random);
 
         return CurveBabyJubJub.pointAdd(mGx, mGy, rHx, rHy);
     }

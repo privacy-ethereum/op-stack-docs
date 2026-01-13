@@ -10,6 +10,6 @@ import { IVerifyingKeyObjectParams } from "./types";
 export const extractVerifyingKey = async (
   zkeyPath: string
 ): Promise<IVerifyingKeyObjectParams> =>
-  zKey
+  await zKey
     .exportVerificationKey(zkeyPath)
     .then((verifyingKey) => verifyingKey as IVerifyingKeyObjectParams);

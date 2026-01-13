@@ -4,37 +4,77 @@ include "./babyjub.circom";
 include "./bitify.circom";
 include "./escalarmulfix.circom";
 
-/**
- * PedersenCommitment Circuit
+/*
+ * PedersenCommitment circuit implements a Pedersen commitment scheme over the
+ * Baby Jubjub elliptic curve.
  *
- * This circuit implements a Pedersen commitment on the Baby Jubjub elliptic curve.
- * A Pedersen commitment is a cryptographic commitment scheme of the form:
- *    C = message * G + random * H
+ * A Pedersen commitment has the form:
+ *
+ *   C = message * G + random * H
+ *
  * where:
- *    - message is the message (secret)
- *    - random is a random blinding factor
- *    - G and H are fixed points on the curve
- *    - C is the resulting commitment (output)
+ *  - message is the committed secret value
+ *  - random is a blinding factor
+ *  - G and H are fixed, independent generators on the curve
+ *  - C is the resulting elliptic curve point commitment
  *
- * The commitment is perfectly hiding (does not reveal message) and computationally binding
- * (cannot find a different message', random' that maps to the same C without breaking discrete log).
+ * This construction is perfectly hiding and computationally binding under the
+ * discrete logarithm assumption on Baby Jubjub.
+ *
+ * The circuit performs the following checks:
+ * 1. Converts the secret message and blinding factor into fixed-length bit
+ *    representations.
+ * 2. Computes message * G and random * H using fixed-base scalar multiplication.
+ * 3. Adds the resulting points to obtain the Pedersen commitment.
+ * 4. Enforces that the computed commitment matches the provided public
+ *    commitment point.
+ *
+ * Inputs:
+ * -------
+ * Private Inputs:
+ *  - message : Secret value being committed.
+ *  - random  : Blinding factor providing hiding.
+ *
+ * Public Inputs:
+ *  - commitment : Expected Pedersen commitment point [x, y].
+ *
+ * Outputs:
+ * --------
+ *  - out : The computed Pedersen commitment point [x, y].
+ *
+ * Subcomponents:
+ * ---------------
+ * 1. Num2Bits        : Converts scalars to fixed-length bit arrays.
+ * 2. EscalarMulFix  : Fixed-base scalar multiplication on Baby Jubjub.
+ * 3. BabyAdd        : Elliptic curve point addition.
+ *
+ * Constants:
+ * ----------
+ *  - G : Primary generator point on Baby Jubjub.
+ *  - H : Secondary generator point, independent from G.
+ *
+ * Security Notes:
+ * ---------------
+ * - H must be chosen such that its discrete logarithm relative to G is unknown.
+ * - Binding relies on the hardness of the discrete logarithm problem.
+ * - Hiding relies on the secrecy and uniformity of the blinding factor.
  */
 template PedersenCommitment() {
     // ------------------------------------------------------
     // Private Inputs
     // ------------------------------------------------------
-    // The secret message to commit
+    // Secret value being committed
     signal input message;
-    // The random blinding factor
+    // Blinding factor providing hiding
     signal input random;
 
     // ------------------------------------------------------
     // Public Inputs
     // ------------------------------------------------------
-    // Expected commitment point [x, y] for verification
+    // Expected Pedersen commitment point [x, y]
     signal input commitment[2];
     
-    // Output commitment point [x, y]
+    // The computed Pedersen commitment point [x, y]
     signal output out[2];
 
     // Base generator

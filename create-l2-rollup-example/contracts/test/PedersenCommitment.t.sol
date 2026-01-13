@@ -2,7 +2,6 @@
 pragma solidity ^0.8.30;
 
 import {Test} from "forge-std/src/Test.sol";
-import {console} from "forge-std/src/console.sol";
 import {CurveBabyJubJub} from "../src/crypto/CurveBabyJubJub.sol";
 import {PedersenCommitment} from "../src/PedersenCommitment.sol";
 
@@ -16,15 +15,15 @@ contract PedersenCommitmentTest is Test {
     function test_generatorOnCurve() public view {
         assertTrue(
             CurveBabyJubJub.isOnCurve(
-                CurveBabyJubJub.Base8X,
-                CurveBabyJubJub.Base8Y
+                CurveBabyJubJub.BASE8_X,
+                CurveBabyJubJub.BASE8_Y
             )
         );
 
         assertTrue(
             CurveBabyJubJub.isOnCurve(
-                pedersenCommitment.Hx(),
-                pedersenCommitment.Hy()
+                pedersenCommitment.HX(),
+                pedersenCommitment.HY()
             )
         );
     }
